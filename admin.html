@@ -1,75 +1,200 @@
-function printBill() {
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AJ Crackers - Admin Bill Page</title>
 
-  const name = document.getElementById("customerName").value.trim();
-  const phone = document.getElementById("customerPhone").value.trim();
-  const address = document.getElementById("customerAddress").value.trim();
+  <!-- STYLES -->
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      margin: 0;
+    }
+    h1 {
+      color: #d9534f;
+    }
+    input, textarea {
+      padding: 8px;
+      font-size: 14px;
+      margin-bottom: 10px;
+      width: 100%;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+    }
+    th {
+      background-color: #f9f9f9;
+    }
+    .button {
+      background-color: #f44336;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 20px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .button:hover {
+      background-color: #d32f2f;
+    }
+    .section {
+      max-width: 800px;
+      margin: auto;
+    }
+  </style>
 
-  if (!name || !address) {
-    alert("Please enter customer name and address.");
-    return;
-  }
+  <!-- JS LIBRARIES -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+</head>
 
-  const rows = [];
-  const productRows = document.querySelectorAll("#productTable tbody tr");
+<body onload="loadProducts()">
+  <div class="section">
+    <h1>🧾 AJ Crackers - Admin Bill Page</h1>
 
-  let itemCount = 0;
-  let total = 0;
+    <!-- CUSTOMER INFO -->
+    <label>Name *</label>
+    <input type="text" id="customerName" placeholder="Enter customer name" required>
 
-  productRows.forEach(row => {
-    const input = row.querySelector("input[type='number']");
-    if (!input) return;
-    const quantity = parseInt(input.value);
-    if (!quantity || quantity <= 0) return;
+    <label>Address *</label>
+    <textarea id="customerAddress" rows="3" placeholder="Enter address" required></textarea>
 
-    const name = input.dataset.name;
-    const offerPrice = parseFloat(input.dataset.offer);
-    const itemTotal = quantity * offerPrice;
-    total += itemTotal;
-    itemCount++;
+    <label>Phone (optional)</label>
+    <input type="tel" id="customerPhone" placeholder="Enter phone number" maxlength="10"
+           onkeypress="return /[0-9]/.test(event.key) && this.value.length < 10">
 
-    rows.push([
-      itemCount,
-      name,
-      quantity,
-      `₹${offerPrice.toFixed(2)}`,
-      `₹${itemTotal.toFixed(2)}`
-    ]);
-  });
+    <!-- PRODUCT TABLE -->
+    <table id="productTable">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Unit</th>
+          <th>Offer Price ₹</th>
+          <th>Qty</th>
+          <th>Total ₹</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
 
-  if (rows.length === 0) {
-    alert("No products selected.");
-    return;
-  }
+    <!-- BUTTON -->
+    <button class="button" onclick="printBill()">🧾 Print Bill</button>
+  </div>
 
-  // Title
-  doc.setFontSize(16);
-  doc.text("AJ Crackers - Customer Bill", 14, 20);
+  <!-- SCRIPT -->
+  <script>
+    const { jsPDF } = window.jspdf;
+    let currentOffer = 80;
 
-  // Customer Info
-  doc.setFontSize(12);
-  doc.text(`Customer Name: ${name}`, 14, 30);
-  doc.text(`Address: ${address}`, 14, 37);
-  if (phone) doc.text(`Phone: ${phone}`, 14, 44);
+    function loadProducts() {
+      fetch('products.json')
+        .then(res => res.json())
+        .then(data => {
+          const products = Object.entries(data).map(([name, item]) => ({
+            name,
+            offerprice: Number(item.offerprice || 0),
+            unit: item.unit || '-'
+          }));
+          renderProducts(products);
+        })
+        .catch(err => {
+          console.error("Error loading products:", err);
+          document.querySelector("#productTable tbody").innerHTML = '<tr><td colspan="5">Failed to load products.</td></tr>';
+        });
+    }
 
-  // Table
-  doc.autoTable({
-    startY: 50,
-    head: [["S.No", "Product", "Qty", "Rate", "Total"]],
-    body: rows,
-    theme: "grid",
-    headStyles: { fillColor: [0, 123, 255] },
-    styles: { fontSize: 11 },
-  });
+    function renderProducts(products) {
+      const tbody = document.querySelector("#productTable tbody");
+      tbody.innerHTML = "";
 
-  // Total
-  doc.setFontSize(13);
-  doc.text(`Grand Total (After ${currentOffer}% Discount): ₹${total.toFixed(2)}`, 14, doc.lastAutoTable.finalY + 10);
+      products.forEach((product, i) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${product.name}</td>
+          <td>${product.unit}</td>
+          <td>₹${product.offerprice.toFixed(2)}</td>
+          <td><input type="number" min="0" data-name="${product.name}" data-price="${product.offerprice}" onchange="updateTotal(this)"></td>
+          <td class="item-total">₹0.00</td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
 
-  // Footer
-  doc.setFontSize(10);
-  doc.text("Thank you for shopping with AJ Crackers!", 14, doc.lastAutoTable.finalY + 20);
+    function updateTotal(input) {
+      const price = parseFloat(input.dataset.price);
+      const qty = parseInt(input.value) || 0;
+      const totalCell = input.closest("tr").querySelector(".item-total");
+      totalCell.textContent = `₹${(price * qty).toFixed(2)}`;
+    }
 
-  doc.save(`Bill_${name.replace(/\s+/g, '_')}.pdf`);
-}
+    function printBill() {
+      const name = document.getElementById("customerName").value.trim();
+      const address = document.getElementById("customerAddress").value.trim();
+      const phone = document.getElementById("customerPhone").value.trim();
+
+      if (!name || !address) {
+        alert("Please fill in required fields (Name and Address).");
+        return;
+      }
+
+      const doc = new jsPDF();
+      doc.setFontSize(16);
+      doc.text("AJ Crackers - Customer Bill", 14, 20);
+
+      doc.setFontSize(12);
+      doc.text(`Customer Name: ${name}`, 14, 30);
+      doc.text(`Address: ${address}`, 14, 38);
+      if (phone) doc.text(`Phone: ${phone}`, 14, 46);
+
+      const rows = [];
+      let index = 1;
+      let grandTotal = 0;
+
+      document.querySelectorAll("#productTable tbody tr").forEach(row => {
+        const input = row.querySelector("input[type='number']");
+        const qty = parseInt(input.value);
+        if (!qty || qty <= 0) return;
+
+        const name = input.dataset.name;
+        const price = parseFloat(input.dataset.price);
+        const total = price * qty;
+        grandTotal += total;
+
+        rows.push([index++, name, qty, `₹${price.toFixed(2)}`, `₹${total.toFixed(2)}`]);
+      });
+
+      if (rows.length === 0) {
+        alert("No products selected.");
+        return;
+      }
+
+      doc.autoTable({
+        startY: 55,
+        head: [["S.No", "Product", "Qty", "Rate", "Total"]],
+        body: rows,
+        theme: "grid",
+        headStyles: { fillColor: [244, 67, 54] },
+      });
+
+      const finalY = doc.lastAutoTable.finalY + 10;
+      doc.setFontSize(13);
+      doc.text(`Grand Total (After ${currentOffer}% Discount): ₹${grandTotal.toFixed(2)}`, 14, finalY);
+
+      doc.setFontSize(10);
+      doc.text("Thank you for shopping with AJ Crackers!", 14, finalY + 10);
+
+      doc.save(`Bill_${name.replace(/\s+/g, '_')}.pdf`);
+    }
+  </script>
+</body>
+</html>
