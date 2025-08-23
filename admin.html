@@ -243,7 +243,7 @@
             const total = qty * price;
             count++;
             grandTotal += total;
-            rows.push([count, pname, qty, `Rs.${price.toFixed(2)}`, `Rs.${total.toFixed(2)}`]);
+            rows.push([count, pname, qty, `${price.toFixed(2)}`, `${total.toFixed(2)}`]);
           });
 
           if (!rows.length) {
@@ -270,7 +270,7 @@
 
           const finalY = doc.lastAutoTable.finalY + 10;
           doc.setFontSize(13);
-          doc.text(`Grand Total (After ${currentOffer}% Discount): Rs.${grandTotal.toFixed(2)}`, 14, finalY);
+          doc.text(`Grand Total (After ${currentOffer}% Discount): ${grandTotal.toFixed(2)}`, 14, finalY);
           doc.setFontSize(10);
           doc.text('Thank you for shopping with AJ Crackers!', 14, finalY + 8);
 
