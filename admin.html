@@ -18,6 +18,16 @@
     .category-header td { padding-left: 15px; font-size: 18px; }
     .category-row { transition: all 0.3s ease; }
     .item-total, th:last-child, td:last-child { text-align: center; }
+    .category-header {
+  background-color: #f0f0f0;
+  font-weight: bold;
+  user-select: none;
+}
+.category-header td {
+  font-size: 16px;
+  padding: 10px;
+}
+
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
@@ -80,47 +90,55 @@
         });
     }
 
-    function renderAdminTable(products) {
-      const tbody = document.querySelector('#productTable tbody');
-      tbody.innerHTML = '';
+  function renderAdminTable(products) {
+  const tbody = document.querySelector('#productTable tbody');
+  tbody.innerHTML = '';
 
-      const categories = {};
-      products.forEach(p => {
-        const key = p.category.trim() || 'Uncategorized';
-        categories[key] = categories[key] || [];
-        categories[key].push(p);
-      });
+  const categories = {};
+  products.forEach(p => {
+    const key = p.category.trim() || 'Uncategorized';
+    categories[key] = categories[key] || [];
+    categories[key].push(p);
+  });
 
-      Object.entries(categories).forEach(([category, items], idx) => {
-        const catRow = document.createElement('tr');
-        catRow.className = 'category-header';
-        catRow.innerHTML = `<td colspan="6">▼ ${category}</td>`;
-        tbody.appendChild(catRow);
+  let categoryIndex = 0;
 
-        items.forEach(item => {
-          const row = document.createElement('tr');
-          row.className = `category-row category-${idx}`;
-          row.innerHTML = `
-            <td>${item.name}</td>
-            <td>${item.unit}</td>
-            <td>₹${item.price.toFixed(2)}</td>
-            <td>₹${item.offerprice.toFixed(2)}</td>
-            <td><input type="number" min="0" step="1" placeholder="Qty" onchange="updateTotals()" oninput="validateIntegerInput(this)"
-                       data-name="${item.name}" data-price="${item.offerprice}"></td>
-            <td class="item-total">₹0.00</td>`;
-          tbody.appendChild(row);
-        });
+  Object.entries(categories).forEach(([category, items]) => {
+    const catId = `cat-${categoryIndex}`;
 
-        catRow.addEventListener('click', () => {
-          document.querySelectorAll(`.category-${idx}`)
-            .forEach(r => r.style.display = r.style.display === 'none' ? '' : 'none');
-          catRow.cells[0].textContent =
-            catRow.cells[0].textContent.startsWith('▼')
-              ? catRow.cells[0].textContent.replace('▼', '▶')
-              : catRow.cells[0].textContent.replace('▶', '▼');
-        });
-      });
-    }
+    // Create collapsible category header row
+    const catRow = document.createElement('tr');
+    catRow.className = 'category-header';
+    catRow.innerHTML = `<td colspan="6" style="cursor:pointer;">▼ ${category}</td>`;
+    tbody.appendChild(catRow);
+
+    // Add product rows under the category
+    items.forEach(item => {
+      const row = document.createElement('tr');
+      row.className = `category-row ${catId}`;
+      row.innerHTML = `
+        <td>${item.name}</td>
+        <td>${item.unit}</td>
+        <td>₹${item.price.toFixed(2)}</td>
+        <td>₹${item.offerprice.toFixed(2)}</td>
+        <td><input type="number" min="0" step="1" placeholder="Qty" onchange="updateTotals()" oninput="validateIntegerInput(this)"
+                   data-name="${item.name}" data-price="${item.offerprice}"></td>
+        <td class="item-total">₹0.00</td>`;
+      tbody.appendChild(row);
+    });
+
+    // Accordion toggle behavior
+    catRow.addEventListener('click', () => {
+      const rows = document.querySelectorAll(`.${catId}`);
+      const isVisible = rows[0]?.style.display !== 'none';
+      rows.forEach(r => r.style.display = isVisible ? 'none' : '');
+      catRow.cells[0].innerText = `${isVisible ? '▶' : '▼'} ${category}`;
+    });
+
+    categoryIndex++;
+  });
+}
+
 
     function validateIntegerInput(input) {
       if (input.value && !/^\d+$/.test(input.value)) {
