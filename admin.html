@@ -1,0 +1,75 @@
+function printBill() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  const name = document.getElementById("customerName").value.trim();
+  const phone = document.getElementById("customerPhone").value.trim();
+  const address = document.getElementById("customerAddress").value.trim();
+
+  if (!name || !address) {
+    alert("Please enter customer name and address.");
+    return;
+  }
+
+  const rows = [];
+  const productRows = document.querySelectorAll("#productTable tbody tr");
+
+  let itemCount = 0;
+  let total = 0;
+
+  productRows.forEach(row => {
+    const input = row.querySelector("input[type='number']");
+    if (!input) return;
+    const quantity = parseInt(input.value);
+    if (!quantity || quantity <= 0) return;
+
+    const name = input.dataset.name;
+    const offerPrice = parseFloat(input.dataset.offer);
+    const itemTotal = quantity * offerPrice;
+    total += itemTotal;
+    itemCount++;
+
+    rows.push([
+      itemCount,
+      name,
+      quantity,
+      `₹${offerPrice.toFixed(2)}`,
+      `₹${itemTotal.toFixed(2)}`
+    ]);
+  });
+
+  if (rows.length === 0) {
+    alert("No products selected.");
+    return;
+  }
+
+  // Title
+  doc.setFontSize(16);
+  doc.text("AJ Crackers - Customer Bill", 14, 20);
+
+  // Customer Info
+  doc.setFontSize(12);
+  doc.text(`Customer Name: ${name}`, 14, 30);
+  doc.text(`Address: ${address}`, 14, 37);
+  if (phone) doc.text(`Phone: ${phone}`, 14, 44);
+
+  // Table
+  doc.autoTable({
+    startY: 50,
+    head: [["S.No", "Product", "Qty", "Rate", "Total"]],
+    body: rows,
+    theme: "grid",
+    headStyles: { fillColor: [0, 123, 255] },
+    styles: { fontSize: 11 },
+  });
+
+  // Total
+  doc.setFontSize(13);
+  doc.text(`Grand Total (After ${currentOffer}% Discount): ₹${total.toFixed(2)}`, 14, doc.lastAutoTable.finalY + 10);
+
+  // Footer
+  doc.setFontSize(10);
+  doc.text("Thank you for shopping with AJ Crackers!", 14, doc.lastAutoTable.finalY + 20);
+
+  doc.save(`Bill_${name.replace(/\s+/g, '_')}.pdf`);
+}
