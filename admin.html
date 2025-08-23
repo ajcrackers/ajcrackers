@@ -115,10 +115,10 @@
           <tr>
             <th>Crackers Name</th>
             <th>Unit</th>
-            <th>Actual Price (₹)</th>
-            <th>Offer Price (₹)</th>
+            <th>Actual Price (Rs.)</th>
+            <th>Offer Price (Rs.)</th>
             <th>Quantity</th>
-            <th>Total (₹)</th>
+            <th>Total (Rs.)</th>
           </tr>
         </thead>
         <tbody></tbody>
@@ -183,11 +183,11 @@
               row.innerHTML = `
                 <td>${item.name}</td>
                 <td>${item.unit}</td>
-                <td>₹${item.price.toFixed(2)}</td>
-                <td>₹${item.offerprice.toFixed(2)}</td>
+                <td>Rs.${item.price.toFixed(2)}</td>
+                <td>Rs.${item.offerprice.toFixed(2)}</td>
                 <td><input type="number" min="0" step="1" placeholder="Qty" onchange="updateTotals()" oninput="validateIntegerInput(this)"
                            data-name="${item.name}" data-price="${item.offerprice}"></td>
-                <td class="item-total">₹0.00</td>`;
+                <td class="item-total">Rs.0.00</td>`;
               tbody.appendChild(row);
             });
 
@@ -218,7 +218,7 @@
             if (!input) return;
             const qty = parseInt(input.value) || 0;
             const price = parseFloat(input.dataset.price) || 0;
-            totalCell.textContent = `₹${(qty * price).toFixed(2)}`;
+            totalCell.textContent = `Rs.${(qty * price).toFixed(2)}`;
           });
         }
 
@@ -243,7 +243,7 @@
             const total = qty * price;
             count++;
             grandTotal += total;
-            rows.push([count, pname, qty, `₹${price.toFixed(2)}`, `₹${total.toFixed(2)}`]);
+            rows.push([count, pname, qty, `Rs.${price.toFixed(2)}`, `Rs.${total.toFixed(2)}`]);
           });
 
           if (!rows.length) {
@@ -270,7 +270,7 @@
 
           const finalY = doc.lastAutoTable.finalY + 10;
           doc.setFontSize(13);
-          doc.text(`Grand Total (After ${currentOffer}% Discount): ₹${grandTotal.toFixed(2)}`, 14, finalY);
+          doc.text(`Grand Total (After ${currentOffer}% Discount): Rs.${grandTotal.toFixed(2)}`, 14, finalY);
           doc.setFontSize(10);
           doc.text('Thank you for shopping with AJ Crackers!', 14, finalY + 8);
 
