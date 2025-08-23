@@ -126,6 +126,14 @@
 
       <button class="button" onclick="printBill()">🧾 Print Bill</button>
 <button class="button" style="background-color:#5bc0de; margin-left: 10px;" onclick="downloadCustomerInfo()">📥 Download Customer Info</button>
+
+      <script>
+        const { jsPDF } = window.jspdf;
+        let currentOffer = 80;
+
+        function initializeAdminPage() {
+          loadProducts();
+        }
 function downloadCustomerInfo() {
   // Get the current date in YYYY-MM-DD format
   const today = new Date().toISOString().slice(0, 10);
@@ -176,14 +184,6 @@ function downloadCustomerInfo() {
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
 }
-
-      <script>
-        const { jsPDF } = window.jspdf;
-        let currentOffer = 80;
-
-        function initializeAdminPage() {
-          loadProducts();
-        }
 
         function loadProducts() {
           fetch('products.json')
