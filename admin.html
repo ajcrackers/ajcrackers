@@ -134,51 +134,6 @@
         function initializeAdminPage() {
           loadProducts();
         }
-function downloadCustomerInfo() {
-  const today = new Date().toISOString().slice(0, 10);
-
-  const name = document.getElementById('customerName').value.trim();
-  const address = document.getElementById('customerAddress').value.trim();
-  const phone = document.getElementById('customerPhone').value.trim();
-
-  if (!name || !address) {
-    alert('Please enter Name and Address before downloading.');
-    return;
-  }
-
-  let customers = JSON.parse(localStorage.getItem('customerInfo')) || [];
-
-  customers.push({
-    date: today,
-    name,
-    address,
-    phone
-  });
-
-  localStorage.setItem('customerInfo', JSON.stringify(customers));
-
-  // Create CSV content (NOTE: wrapping date and phone in ="..." to force Excel to treat as text)
-  let content = `Date,Name,Address,Phone\n`;
-  customers.forEach(c => {
-    const safeDate = `="${c.date}"`;
-    const safePhone = c.phone ? `="${c.phone}"` : '';
-    const safeName = `"${c.name.replace(/"/g, '""')}"`;
-    const safeAddress = `"${c.address.replace(/"/g, '""')}"`;
-    content += `${safeDate},${safeName},${safeAddress},${safePhone}\n`;
-  });
-
-  const blob = new Blob([content], { type: 'text/csv' });
-  const url = URL.createObjectURL(blob);
-
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `CustomerInfo_${today}.csv`;
-  document.body.appendChild(a);
-  a.click();
-
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-}
 
         function renderAdminTable(products) {
           const tbody = document.querySelector('#productTable tbody');
@@ -247,6 +202,47 @@ function downloadCustomerInfo() {
             totalCell.textContent = `Rs.${(qty * price).toFixed(2)}`;
           });
         }
+function downloadCustomerInfo() {
+  const today = new Date().toISOString().slice(0, 10);
+
+  const name = document.getElementById('customerName').value.trim();
+  const address = document.getElementById('customerAddress').value.trim();
+  const phone = document.getElementById('customerPhone').value.trim();
+
+
+  let customers = JSON.parse(localStorage.getItem('customerInfo')) || [];
+
+  customers.push({
+    date: today,
+    name,
+    address,
+    phone
+  });
+
+  localStorage.setItem('customerInfo', JSON.stringify(customers));
+
+  // Create CSV content (NOTE: wrapping date and phone in ="..." to force Excel to treat as text)
+  let content = `Date,Name,Address,Phone\n`;
+  customers.forEach(c => {
+    const safeDate = `="${c.date}"`;
+    const safePhone = c.phone ? `="${c.phone}"` : '';
+    const safeName = `"${c.name.replace(/"/g, '""')}"`;
+    const safeAddress = `"${c.address.replace(/"/g, '""')}"`;
+    content += `${safeDate},${safeName},${safeAddress},${safePhone}\n`;
+  });
+
+  const blob = new Blob([content], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `CustomerInfo_${today}.csv`;
+  document.body.appendChild(a);
+  a.click();
+
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
 
         function printBill() {
           const name = document.getElementById('customerName').value.trim();
