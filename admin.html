@@ -125,6 +125,57 @@
       </table>
 
       <button class="button" onclick="printBill()">🧾 Print Bill</button>
+<button class="button" style="background-color:#5bc0de; margin-left: 10px;" onclick="downloadCustomerInfo()">📥 Download Customer Info</button>
+function downloadCustomerInfo() {
+  // Get the current date in YYYY-MM-DD format
+  const today = new Date().toISOString().slice(0, 10);
+
+  // Get current input values
+  const name = document.getElementById('customerName').value.trim();
+  const address = document.getElementById('customerAddress').value.trim();
+  const phone = document.getElementById('customerPhone').value.trim();
+
+  if (!name || !address) {
+    alert('Please enter Name and Address before downloading.');
+    return;
+  }
+
+  // Get saved customer info array from localStorage, or create empty array
+  let customers = JSON.parse(localStorage.getItem('customerInfo')) || [];
+
+  // Add current customer with date
+  customers.push({
+    date: today,
+    name,
+    address,
+    phone
+  });
+
+  // Save back to localStorage
+  localStorage.setItem('customerInfo', JSON.stringify(customers));
+
+  // Create content for download (CSV or simple text)
+  let content = `Date,Name,Address,Phone\n`;
+  customers.forEach(c => {
+    // Escape commas in address or name by wrapping in quotes
+    content += `"${c.date}","${c.name.replace(/"/g, '""')}","${c.address.replace(/"/g, '""')}","${c.phone}"\n`;
+  });
+
+  // Create a blob and download link
+  const blob = new Blob([content], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+
+  // Create a temporary link element to trigger download
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `CustomerInfo_${today}.csv`;
+  document.body.appendChild(a);
+  a.click();
+
+  // Cleanup
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
 
       <script>
         const { jsPDF } = window.jspdf;
