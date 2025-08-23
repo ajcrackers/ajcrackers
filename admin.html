@@ -217,10 +217,6 @@
           const address = document.getElementById('customerAddress').value.trim();
           const phone = document.getElementById('customerPhone').value.trim();
 
-          if (!name || !address) {
-            alert('Name and Address are required to download customer info.');
-            return;
-          }
 
           let customers = JSON.parse(localStorage.getItem('customerInfo')) || [];
           customers.push({ date: today, name, address, phone });
