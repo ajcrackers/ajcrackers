@@ -4,194 +4,194 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>AJ Crackers - Admin Bill Page</title>
-
-  <!-- STYLES -->
   <style>
-    body {
-      font-family: sans-serif;
-      padding: 20px;
-      margin: 0;
-    }
-    h1 {
-      color: #d9534f;
-    }
-    input, textarea {
-      padding: 8px;
-      font-size: 14px;
-      margin-bottom: 10px;
-      width: 100%;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-    }
-    th, td {
-      border: 1px solid #ccc;
-      padding: 10px;
-      text-align: center;
-    }
-    th {
-      background-color: #f9f9f9;
-    }
-    .button {
-      background-color: #f44336;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      font-size: 16px;
-      margin-top: 20px;
-      cursor: pointer;
-      border-radius: 4px;
-    }
-    .button:hover {
-      background-color: #d32f2f;
-    }
-    .section {
-      max-width: 800px;
-      margin: auto;
-    }
+    body { font-family: sans-serif; padding: 20px; margin: 0; }
+    h1 { color: #d9534f; }
+    input, textarea { padding: 8px; font-size: 14px; margin-bottom: 10px; width: 100%; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 10px; }
+    th { background-color: #f9f9f9; text-align: center; }
+    td:first-child { text-align: left; }
+    .button { background-color: #f44336; color: white; border: none; padding: 10px 20px; font-size: 16px; margin-top: 20px; cursor: pointer; border-radius: 4px; }
+    .button:hover { background-color: #d32f2f; }
+    .category-header { background-color: #f0f0f0; cursor: pointer; font-weight: bold; text-align: left; }
+    .category-header td { padding-left: 15px; font-size: 18px; }
+    .category-row { transition: all 0.3s ease; }
+    .item-total, th:last-child, td:last-child { text-align: center; }
   </style>
-
-  <!-- JS LIBRARIES -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
 </head>
 
-<body onload="loadProducts()">
-  <div class="section">
-    <h1>🧾 AJ Crackers - Admin Bill Page</h1>
+<body onload="initializeAdminPage()">
+  <h1>🧾 AJ Crackers — Admin Bill Page</h1>
 
-    <!-- CUSTOMER INFO -->
-    <label>Name *</label>
-    <input type="text" id="customerName" placeholder="Enter customer name" required>
+  <label>Name *</label>
+  <input type="text" id="customerName" placeholder="Enter customer name">
 
-    <label>Address *</label>
-    <textarea id="customerAddress" rows="3" placeholder="Enter address" required></textarea>
+  <label>Address *</label>
+  <textarea id="customerAddress" rows="3" placeholder="Enter address"></textarea>
 
-    <label>Phone (optional)</label>
-    <input type="tel" id="customerPhone" placeholder="Enter phone number" maxlength="10"
-           onkeypress="return /[0-9]/.test(event.key) && this.value.length < 10">
+  <label>Phone (optional)</label>
+  <input type="tel" id="customerPhone" placeholder="Enter phone number" maxlength="10"
+         onkeypress="return /[0-9]/.test(event.key) && this.value.length < 10">
 
-    <!-- PRODUCT TABLE -->
-    <table id="productTable">
-      <thead>
-        <tr>
-          <th>Product</th>
-          <th>Unit</th>
-          <th>Offer Price ₹</th>
-          <th>Qty</th>
-          <th>Total ₹</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
+  <table id="productTable">
+    <thead>
+      <tr>
+        <th>Crackers Name</th>
+        <th>Unit</th>
+        <th>Actual Price (₹)</th>
+        <th>Offer Price (₹)</th>
+        <th>Quantity</th>
+        <th>Total (₹)</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
 
-    <!-- BUTTON -->
-    <button class="button" onclick="printBill()">🧾 Print Bill</button>
-  </div>
+  <button class="button" onclick="printBill()">🧾 Print Bill</button>
 
-  <!-- SCRIPT -->
   <script>
     const { jsPDF } = window.jspdf;
     let currentOffer = 80;
+
+    function initializeAdminPage() {
+      loadProducts();
+    }
 
     function loadProducts() {
       fetch('products.json')
         .then(res => res.json())
         .then(data => {
-          const products = Object.entries(data).map(([name, item]) => ({
+          const products = Object.entries(data).map(([name, info]) => ({
             name,
-            offerprice: Number(item.offerprice || 0),
-            unit: item.unit || '-'
+            unit: info.unit || '-',
+            price: Number(info.price) || 0,
+            offerprice: Number(info.offerprice) || 0,
+            category: info.category || 'Uncategorized'
           }));
-          renderProducts(products);
+          renderAdminTable(products);
         })
         .catch(err => {
-          console.error("Error loading products:", err);
-          document.querySelector("#productTable tbody").innerHTML = '<tr><td colspan="5">Failed to load products.</td></tr>';
+          console.error('Error loading products:', err);
+          document.querySelector('#productTable tbody').innerHTML =
+            '<tr><td colspan="6">Failed to load products.</td></tr>';
         });
     }
 
-    function renderProducts(products) {
-      const tbody = document.querySelector("#productTable tbody");
-      tbody.innerHTML = "";
+    function renderAdminTable(products) {
+      const tbody = document.querySelector('#productTable tbody');
+      tbody.innerHTML = '';
 
-      products.forEach((product, i) => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-          <td>${product.name}</td>
-          <td>${product.unit}</td>
-          <td>₹${product.offerprice.toFixed(2)}</td>
-          <td><input type="number" min="0" data-name="${product.name}" data-price="${product.offerprice}" onchange="updateTotal(this)"></td>
-          <td class="item-total">₹0.00</td>
-        `;
-        tbody.appendChild(row);
+      const categories = {};
+      products.forEach(p => {
+        const key = p.category.trim() || 'Uncategorized';
+        categories[key] = categories[key] || [];
+        categories[key].push(p);
+      });
+
+      Object.entries(categories).forEach(([category, items], idx) => {
+        const catRow = document.createElement('tr');
+        catRow.className = 'category-header';
+        catRow.innerHTML = `<td colspan="6">▼ ${category}</td>`;
+        tbody.appendChild(catRow);
+
+        items.forEach(item => {
+          const row = document.createElement('tr');
+          row.className = `category-row category-${idx}`;
+          row.innerHTML = `
+            <td>${item.name}</td>
+            <td>${item.unit}</td>
+            <td>₹${item.price.toFixed(2)}</td>
+            <td>₹${item.offerprice.toFixed(2)}</td>
+            <td><input type="number" min="0" step="1" placeholder="Qty" onchange="updateTotals()" oninput="validateIntegerInput(this)"
+                       data-name="${item.name}" data-price="${item.offerprice}"></td>
+            <td class="item-total">₹0.00</td>`;
+          tbody.appendChild(row);
+        });
+
+        catRow.addEventListener('click', () => {
+          document.querySelectorAll(`.category-${idx}`)
+            .forEach(r => r.style.display = r.style.display === 'none' ? '' : 'none');
+          catRow.cells[0].textContent =
+            catRow.cells[0].textContent.startsWith('▼')
+              ? catRow.cells[0].textContent.replace('▼', '▶')
+              : catRow.cells[0].textContent.replace('▶', '▼');
+        });
       });
     }
 
-    function updateTotal(input) {
-      const price = parseFloat(input.dataset.price);
-      const qty = parseInt(input.value) || 0;
-      const totalCell = input.closest("tr").querySelector(".item-total");
-      totalCell.textContent = `₹${(price * qty).toFixed(2)}`;
+    function validateIntegerInput(input) {
+      if (input.value && !/^\d+$/.test(input.value)) {
+        alert('Please enter a whole number.');
+        input.value = '';
+        input.focus();
+      }
+    }
+
+    function updateTotals() {
+      document.querySelectorAll('#productTable tbody tr').forEach(row => {
+        const input = row.querySelector('input[type="number"]');
+        const totalCell = row.querySelector('.item-total');
+        if (!input) return;
+        const qty = parseInt(input.value) || 0;
+        const price = parseFloat(input.dataset.price) || 0;
+        totalCell.textContent = `₹${(qty * price).toFixed(2)}`;
+      });
     }
 
     function printBill() {
-      const name = document.getElementById("customerName").value.trim();
-      const address = document.getElementById("customerAddress").value.trim();
-      const phone = document.getElementById("customerPhone").value.trim();
-
+      const name = document.getElementById('customerName').value.trim();
+      const address = document.getElementById('customerAddress').value.trim();
       if (!name || !address) {
-        alert("Please fill in required fields (Name and Address).");
+        alert('Name and Address are required.');
+        return;
+      }
+      const phone = document.getElementById('customerPhone').value.trim();
+
+      const rows = [];
+      let count = 0, grandTotal = 0;
+      document.querySelectorAll('#productTable tbody tr').forEach(row => {
+        const input = row.querySelector('input[type="number"]');
+        if (!input) return;
+        const qty = parseInt(input.value) || 0;
+        if (qty <= 0) return;
+        const pname = input.dataset.name;
+        const price = parseFloat(input.dataset.price);
+        const total = qty * price;
+        count++;
+        grandTotal += total;
+        rows.push([count, pname, qty, `₹${price.toFixed(2)}`, `₹${total.toFixed(2)}`]);
+      });
+
+      if (!rows.length) {
+        alert('Please enter at least one product quantity.');
         return;
       }
 
       const doc = new jsPDF();
       doc.setFontSize(16);
-      doc.text("AJ Crackers - Customer Bill", 14, 20);
+      doc.text('AJ Crackers - Customer Bill', 14, 20);
 
       doc.setFontSize(12);
-      doc.text(`Customer Name: ${name}`, 14, 30);
+      doc.text(`Name: ${name}`, 14, 30);
       doc.text(`Address: ${address}`, 14, 38);
       if (phone) doc.text(`Phone: ${phone}`, 14, 46);
 
-      const rows = [];
-      let index = 1;
-      let grandTotal = 0;
-
-      document.querySelectorAll("#productTable tbody tr").forEach(row => {
-        const input = row.querySelector("input[type='number']");
-        const qty = parseInt(input.value);
-        if (!qty || qty <= 0) return;
-
-        const name = input.dataset.name;
-        const price = parseFloat(input.dataset.price);
-        const total = price * qty;
-        grandTotal += total;
-
-        rows.push([index++, name, qty, `₹${price.toFixed(2)}`, `₹${total.toFixed(2)}`]);
-      });
-
-      if (rows.length === 0) {
-        alert("No products selected.");
-        return;
-      }
-
       doc.autoTable({
         startY: 55,
-        head: [["S.No", "Product", "Qty", "Rate", "Total"]],
+        head: [['S.No', 'Product', 'Qty', 'Rate', 'Total']],
         body: rows,
-        theme: "grid",
-        headStyles: { fillColor: [244, 67, 54] },
+        theme: 'grid',
+        headStyles: { fillColor: [217, 83, 79] },
       });
 
       const finalY = doc.lastAutoTable.finalY + 10;
       doc.setFontSize(13);
       doc.text(`Grand Total (After ${currentOffer}% Discount): ₹${grandTotal.toFixed(2)}`, 14, finalY);
-
       doc.setFontSize(10);
-      doc.text("Thank you for shopping with AJ Crackers!", 14, finalY + 10);
+      doc.text('Thank you for shopping with AJ Crackers!', 14, finalY + 8);
 
       doc.save(`Bill_${name.replace(/\s+/g, '_')}.pdf`);
     }
