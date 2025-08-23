@@ -164,7 +164,7 @@
             const catId = `cat-${categoryIndex}`;
             const catRow = document.createElement('tr');
             catRow.className = 'category-header';
-            catRow.innerHTML = `<td colspan="6" style="cursor:pointer;">▼ ${category}</td>`;
+            catRow.innerHTML = `<td colspan="6" style="cursor:pointer;text-align:left;">▼ ${category}</td>`;
             tbody.appendChild(catRow);
 
             items.forEach(item => {
