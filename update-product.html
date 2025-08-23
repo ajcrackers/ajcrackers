@@ -42,22 +42,34 @@
     let products = {};
 
     // Load from JSON or localStorage
-    function loadProducts() {
-      const localData = localStorage.getItem('productData');
-      if (localData) {
-        products = JSON.parse(localData);
-        populateDropdown();
-      } else {
-        fetch('products.json')
-          .then(res => res.json())
-          .then(data => {
-            products = data;
-            localStorage.setItem('productData', JSON.stringify(data));
-            populateDropdown();
-          })
-          .catch(err => alert("Failed to load products.json"));
-      }
+   function loadProducts() {
+  const localData = localStorage.getItem('productData');
+  if (localData) {
+    const parsed = JSON.parse(localData);
+    if (Array.isArray(parsed)) {
+      // Convert array to object
+      products = {};
+      parsed.forEach(p => {
+        products[p.name] = p;
+      });
+    } else {
+      products = parsed;
     }
+    populateDropdown();
+  } else {
+    fetch('products.json')
+      .then(res => res.json())
+      .then(data => {
+        products = {};
+        data.forEach(p => {
+          products[p.name] = p;
+        });
+        localStorage.setItem('productData', JSON.stringify(products));
+        populateDropdown();
+      })
+      .catch(err => alert("Failed to load products.json"));
+  }
+}
 
     function populateDropdown() {
       const dropdown = document.getElementById('productDropdown');
