@@ -135,10 +135,8 @@
           loadProducts();
         }
 function downloadCustomerInfo() {
-  // Get the current date in YYYY-MM-DD format
   const today = new Date().toISOString().slice(0, 10);
 
-  // Get current input values
   const name = document.getElementById('customerName').value.trim();
   const address = document.getElementById('customerAddress').value.trim();
   const phone = document.getElementById('customerPhone').value.trim();
@@ -148,10 +146,8 @@ function downloadCustomerInfo() {
     return;
   }
 
-  // Get saved customer info array from localStorage, or create empty array
   let customers = JSON.parse(localStorage.getItem('customerInfo')) || [];
 
-  // Add current customer with date
   customers.push({
     date: today,
     name,
@@ -159,51 +155,30 @@ function downloadCustomerInfo() {
     phone
   });
 
-  // Save back to localStorage
   localStorage.setItem('customerInfo', JSON.stringify(customers));
 
-  // Create content for download (CSV or simple text)
+  // Create CSV content (NOTE: wrapping date and phone in ="..." to force Excel to treat as text)
   let content = `Date,Name,Address,Phone\n`;
   customers.forEach(c => {
-    // Escape commas in address or name by wrapping in quotes
-    content += `"${c.date}","${c.name.replace(/"/g, '""')}","${c.address.replace(/"/g, '""')}","${c.phone}"\n`;
+    const safeDate = `="${c.date}"`;
+    const safePhone = c.phone ? `="${c.phone}"` : '';
+    const safeName = `"${c.name.replace(/"/g, '""')}"`;
+    const safeAddress = `"${c.address.replace(/"/g, '""')}"`;
+    content += `${safeDate},${safeName},${safeAddress},${safePhone}\n`;
   });
 
-  // Create a blob and download link
   const blob = new Blob([content], { type: 'text/csv' });
   const url = URL.createObjectURL(blob);
 
-  // Create a temporary link element to trigger download
   const a = document.createElement('a');
   a.href = url;
   a.download = `CustomerInfo_${today}.csv`;
   document.body.appendChild(a);
   a.click();
 
-  // Cleanup
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
 }
-
-        function loadProducts() {
-          fetch('products.json')
-            .then(res => res.json())
-            .then(data => {
-              const products = Object.entries(data).map(([name, info]) => ({
-                name,
-                unit: info.unit || '-',
-                price: Number(info.price) || 0,
-                offerprice: Number(info.offerprice) || 0,
-                category: info.category || 'Uncategorized'
-              }));
-              renderAdminTable(products);
-            })
-            .catch(err => {
-              console.error('Error loading products:', err);
-              document.querySelector('#productTable tbody').innerHTML =
-                '<tr><td colspan="6">Failed to load products.</td></tr>';
-            });
-        }
 
         function renderAdminTable(products) {
           const tbody = document.querySelector('#productTable tbody');
