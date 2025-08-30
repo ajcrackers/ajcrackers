@@ -635,11 +635,17 @@
         "unit": "Box",
         "offerprice": "80"
     },
-    "King crown": {
-        "price": 400,
+    "Fire Egg": {
+        "price": 750,
         "category": "Special Items",
         "unit": "Box",
-        "offerprice": "80"
+        "offerprice": "150"
+    },
+	 "Bat and Ball": {
+        "price": 900,
+        "category": "Special Items",
+        "unit": "Box",
+        "offerprice": "180"
     },
        "Money bank": {
         "price": 900,
@@ -653,13 +659,13 @@
         "unit": "Box",
         "offerprice": "110"
     },
-    "Colour matches Boom": {
+    "Colour matches Blooms": {
         "price": 500,
         "category": "Kids Special",
         "unit": "Box",
         "offerprice": "100"
     },
-    "Colour matches super six": {
+    "Colour matches super Deluxe": {
         "price": 450,
         "category": "Kids Special",
         "unit": "Box",
@@ -673,19 +679,19 @@
     },
     "30 Item": {
     "price": 450,
-    "category": "Gift Box",
+    "category": "Gift Box (Fixed Price.No Discount)",
     "unit": "Box",
     "offerprice": "450"
   },
   "40 Item": {
     "price": 600,
-    "category": "Gift Box",
+    "category": "Gift Box (Fixed Price.No Discount)",
     "unit": "Box",
     "offerprice": "600"
   },
   "50 Item": {
     "price": 800,
-    "category": "Gift Box",
+    "category": "Gift Box (Fixed Price.No Discount)",
     "unit": "Box",
     "offerprice": "800"
   },
@@ -802,6 +808,12 @@
         "category": "Sparklers",
         "unit": "Box",
         "offerprice": "35"
+    },
+	 "30cm Green Sparklers": {
+        "price": 200,
+        "category": "Sparklers",
+        "unit": "Box",
+        "offerprice": "40"
     },
     "30cm Red Sparklers": {
         "price": 225,
