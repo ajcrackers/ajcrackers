@@ -473,11 +473,35 @@
     "unit": "Box",
     "offerprice": "2400"
   },
-     "Boda Peacock": {
+     "Tri Colour Fountain": {
         "price": 1000,
         "category": "Fountain Items",
         "unit": "Box",
         "offerprice": "200"
+    },
+    "Fun 'n' Fun Shower": {
+        "price": 350,
+        "category": "Fountain Items",
+        "unit": "Box",
+        "offerprice": "70"
+    },
+    "Golden Globe": {
+        "price": 450,
+        "category": "Fountain Items",
+        "unit": "Box",
+        "offerprice": "90"
+    },
+    "Colour Rain": {
+        "price": 450,
+        "category": "Fountain Items",
+        "unit": "Box",
+        "offerprice": "90"
+    },
+    "Peacock Feather": {
+        "price": 450,
+        "category": "Fountain Items",
+        "unit": "Box",
+        "offerprice": "90"
     },
     "Tin": {
         "price": 400,
@@ -485,41 +509,41 @@
         "unit": "Box",
         "offerprice": "80"
     },
-    "Colour Fish": {
-        "price": 350,
+    "Lollipop": {
+        "price": 550,
         "category": "Fountain Items",
         "unit": "Box",
-        "offerprice": "70"
+        "offerprice": "110"
     },
-    "Fun fountain": {
-        "price": 350,
+    "Stardom": {
+        "price": 525,
         "category": "Fountain Items",
         "unit": "Box",
-        "offerprice": "70"
+        "offerprice": "105"
     },
-    "Colour Fountain": {
-        "price": 450,
+    "Popcorn": {
+        "price": 900,
         "category": "Fountain Items",
         "unit": "Box",
-        "offerprice": "90"
+        "offerprice": "180"
     },
-    "Red Hot": {
-        "price": 500,
+    "Cocktail (5 in 1 Fountain)": {
+        "price": 1000,
         "category": "Fountain Items",
         "unit": "Box",
-        "offerprice": "100"
+        "offerprice": "200"
     },
-    "White fountain": {
-        "price": 500,
+    "Peocock Dance": {
+        "price": 650,
         "category": "Fountain Items",
         "unit": "Box",
-        "offerprice": "100"
+        "offerprice": "130"
     },
-    "Blue fountain": {
-        "price": 450,
+    "Bada Peacock": {
+        "price": 1550,
         "category": "Fountain Items",
         "unit": "Box",
-        "offerprice": "90"
+        "offerprice": "310"
     },
     "Butterfly": {
         "price": 350,
@@ -527,50 +551,38 @@
         "unit": "Box",
         "offerprice": "70"
     },
-    "Spinner": {
-        "price": 500,
-        "category": "Fountain Items",
-        "unit": "Box",
-        "offerprice": "100"
-    },
     "Helicopter": {
         "price": 350,
         "category": "Fountain Items",
         "unit": "Box",
         "offerprice": "70"
     },
-    "Colour smoke": {
+	 "Colour Smoke": {
         "price": 750,
         "category": "Fountain Items",
         "unit": "Box",
         "offerprice": "150"
     },
-    "Water Queen": {
+	 "Water Queen": {
         "price": 800,
         "category": "Fountain Items",
         "unit": "Box",
         "offerprice": "160"
     },
-    "Photo flash": {
+    "Photo Flash": {
         "price": 200,
         "category": "Fountain Items",
         "unit": "Box",
         "offerprice": "40"
     },
-    "Twix": {
+	 "Twix": {
         "price": 725,
-        "category": "Fountain Items",
+        "category": "Twix",
         "unit": "Box",
         "offerprice": "145"
     },
     "Sing pop": {
         "price": 700,
-        "category": "Fountain Items",
-        "unit": "Box",
-        "offerprice": "140"
-    },
-    "Fox Star": {
-        "price": 550,
         "category": "Fountain Items",
         "unit": "Box",
         "offerprice": "110"
