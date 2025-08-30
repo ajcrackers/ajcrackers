@@ -551,6 +551,13 @@
         "unit": "Box",
         "offerprice": "70"
     },
+	"
+	"Spinner": {
+        "price": 500,
+        "category": "Fountain Items",
+        "unit": "Box",
+        "offerprice": "100"
+    },
     "Helicopter": {
         "price": 350,
         "category": "Fountain Items",
@@ -577,12 +584,18 @@
     },
 	 "Twix": {
         "price": 725,
-        "category": "Twix",
+        "category": "Fountain Items",
         "unit": "Box",
         "offerprice": "145"
     },
     "Sing pop": {
         "price": 700,
+        "category": "Fountain Items",
+        "unit": "Box",
+        "offerprice": "140"
+    },
+	"Fox Start": {
+        "price": 550,
         "category": "Fountain Items",
         "unit": "Box",
         "offerprice": "110"
