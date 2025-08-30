@@ -395,43 +395,85 @@
         "unit": "Box",
         "offerprice": "20"
     },
-    "90 watts": {
-        "price": 450,
-        "category": "Special Items",
+    "1\" Chota Fancy": {
+        "price": 200,
+        "category": "Sky Display",
         "unit": "Box",
-        "offerprice": "90"
+        "offerprice": "40"
     },
-    "Fancy & Fun": {
-        "price": 700,
-        "category": "Special Items",
-        "unit": "Box",
-        "offerprice": "140"
-    },
-    "Digital war cone": {
-        "price": 800,
-        "category": "Special Items",
-        "unit": "Box",
-        "offerprice": "160"
-    },
-    "parachutes": {
-        "price": 250,
-        "category": "Special Items",
-        "unit": "Box",
-        "offerprice": "50"
-    },
-    "Palm blast": {
+    "2\" Fancy": {
         "price": 400,
-        "category": "Special Items",
+        "category": "Sky Display",
         "unit": "Box",
         "offerprice": "80"
     },
-    "King crown": {
-        "price": 400,
-        "category": "Special Items",
+    "2\" Fancy (3pcs)": {
+        "price": 1000,
+        "category": "Sky Display",
         "unit": "Box",
-        "offerprice": "80"
+        "offerprice": "200"
     },
-    "Boda Peacock": {
+    "3½\" Fancy": {
+        "price": 1150,
+        "category": "Sky Display",
+        "unit": "Box",
+        "offerprice": "230"
+    },
+    "4.\" Fancy": {
+        "price": 1300,
+        "category": "Sky Display",
+        "unit": "Box",
+        "offerprice": "260"
+    },
+    "Niagara Falls": {
+        "price": 1500,
+        "category": "Sky Display",
+        "unit": "Box",
+        "offerprice": "300"
+    },
+    "7 Colors": {
+        "price": 350,
+        "category": "Sky Display",
+        "unit": "Box",
+        "offerprice": "70"
+    },
+    "12 shot": {
+    "price": 550,
+    "category": "Repeating Shots",
+    "unit": "Box",
+    "offerprice": "110"
+  },
+  "25 shot": {
+    "price": 1000,
+    "category": "Repeating Shots",
+    "unit": "Box",
+    "offerprice": "200"
+  },
+  "30 shot multi color": {
+    "price": 1500,
+    "category": "Repeating Shots",
+    "unit": "Box",
+    "offerprice": "300"
+  },
+  "60 shot multi color": {
+    "price": 3000,
+    "category": "Repeating Shots",
+    "unit": "Box",
+    "offerprice": "600"
+  },
+  "120 shot multi color": {
+    "price": 6000,
+    "category": "Repeating Shots",
+    "unit": "Box",
+    "offerprice": "1200"
+  },
+  "240 shot multi color": {
+    "price": 12000,
+    "category": "Repeating Shots",
+    "unit": "Box",
+    "offerprice": "2400"
+  },
+     "Boda Peacock": {
         "price": 1000,
         "category": "Fountain Items",
         "unit": "Box",
@@ -551,7 +593,43 @@
         "unit": "Box",
         "offerprice": "280"
     },
-    "Money bank": {
+    "90 watts": {
+        "price": 450,
+        "category": "Special Items",
+        "unit": "Box",
+        "offerprice": "90"
+    },
+    "Fancy & Fun": {
+        "price": 700,
+        "category": "Special Items",
+        "unit": "Box",
+        "offerprice": "140"
+    },
+    "Digital war cone": {
+        "price": 800,
+        "category": "Special Items",
+        "unit": "Box",
+        "offerprice": "160"
+    },
+    "parachutes": {
+        "price": 250,
+        "category": "Special Items",
+        "unit": "Box",
+        "offerprice": "50"
+    },
+    "Palm blast": {
+        "price": 400,
+        "category": "Special Items",
+        "unit": "Box",
+        "offerprice": "80"
+    },
+    "King crown": {
+        "price": 400,
+        "category": "Special Items",
+        "unit": "Box",
+        "offerprice": "80"
+    },
+       "Money bank": {
         "price": 900,
         "category": "Kids Special",
         "unit": "Box",
@@ -581,6 +659,24 @@
         "unit": "Box",
         "offerprice": "190"
     },
+    "30 Item": {
+    "price": 450,
+    "category": "Gift Box",
+    "unit": "Box",
+    "offerprice": "450"
+  },
+  "40 Item": {
+    "price": 600,
+    "category": "Gift Box",
+    "unit": "Box",
+    "offerprice": "600"
+  },
+  "50 Item": {
+    "price": 800,
+    "category": "Gift Box",
+    "unit": "Box",
+    "offerprice": "800"
+  },
     "7cm Electric Sparklers": {
         "price": 45,
         "category": "Sparklers",
@@ -718,102 +814,5 @@
         "category": "Sparklers",
         "unit": "Box",
         "offerprice": "150"
-    },
-    "1\" Chota Fancy": {
-        "price": 200,
-        "category": "Sky Display",
-        "unit": "Box",
-        "offerprice": "40"
-    },
-    "2\" Fancy": {
-        "price": 400,
-        "category": "Sky Display",
-        "unit": "Box",
-        "offerprice": "80"
-    },
-    "2\" Fancy (3pcs)": {
-        "price": 1000,
-        "category": "Sky Display",
-        "unit": "Box",
-        "offerprice": "200"
-    },
-    "3½\" Fancy": {
-        "price": 1150,
-        "category": "Sky Display",
-        "unit": "Box",
-        "offerprice": "230"
-    },
-    "4.\" Fancy": {
-        "price": 1300,
-        "category": "Sky Display",
-        "unit": "Box",
-        "offerprice": "260"
-    },
-    "Niagara Falls": {
-        "price": 1500,
-        "category": "Sky Display",
-        "unit": "Box",
-        "offerprice": "300"
-    },
-    "7 Colors": {
-        "price": 350,
-        "category": "Sky Display",
-        "unit": "Box",
-        "offerprice": "70"
-    },
-  "12 shot": {
-    "price": 550,
-    "category": "Repeating Shots",
-    "unit": "Box",
-    "offerprice": "110"
-  },
-  "25 shot": {
-    "price": 1000,
-    "category": "Repeating Shots",
-    "unit": "Box",
-    "offerprice": "200"
-  },
-  "30 shot multi color": {
-    "price": 1500,
-    "category": "Repeating Shots",
-    "unit": "Box",
-    "offerprice": "300"
-  },
-  "60 shot multi color": {
-    "price": 3000,
-    "category": "Repeating Shots",
-    "unit": "Box",
-    "offerprice": "600"
-  },
-  "120 shot multi color": {
-    "price": 6000,
-    "category": "Repeating Shots",
-    "unit": "Box",
-    "offerprice": "1200"
-  },
-  "240 shot multi color": {
-    "price": 12000,
-    "category": "Repeating Shots",
-    "unit": "Box",
-    "offerprice": "2400"
-  },
-  "30 Item": {
-    "price": 450,
-    "category": "Gift Box",
-    "unit": "Box",
-    "offerprice": "450"
-  },
-  "40 Item": {
-    "price": 600,
-    "category": "Gift Box",
-    "unit": "Box",
-    "offerprice": "600"
-  },
-  "50 Item": {
-    "price": 800,
-    "category": "Gift Box",
-    "unit": "Box",
-    "offerprice": "800"
-  }
-
+    }
 }
