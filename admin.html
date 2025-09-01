@@ -115,6 +115,9 @@
         </thead>
         <tbody></tbody>
       </table>
+<div id="grandTotalContainer" style="margin-top: 20px; font-size: 18px; font-weight: bold; text-align: right;">
+  Grand Total: Rs.0.00
+</div>
 
       <button class="button" onclick="printBill()">🧾 Print Bill</button>
       <button class="button" style="background-color:#5bc0de; margin-left: 10px;" onclick="downloadCustomerInfo()">📥 Download Customer Info</button>
@@ -205,16 +208,26 @@ function toTitleCase(str) {
           }
         }
 
-        function updateTotals() {
-          document.querySelectorAll('#productTable tbody tr').forEach(row => {
-            const input = row.querySelector('input[type="number"]');
-            const totalCell = row.querySelector('.item-total');
-            if (!input) return;
-            const qty = parseInt(input.value) || 0;
-            const price = parseFloat(input.dataset.price) || 0;
-            totalCell.textContent = `Rs.${(qty * price).toFixed(2)}`;
-          });
-        }
+       function updateTotals() {
+  let grandTotal = 0;
+
+  document.querySelectorAll('#productTable tbody tr').forEach(row => {
+    const input = row.querySelector('input[type="number"]');
+    const totalCell = row.querySelector('.item-total');
+    if (!input) return;
+
+    const qty = parseInt(input.value) || 0;
+    const price = parseFloat(input.dataset.price) || 0;
+    const total = qty * price;
+    grandTotal += total;
+
+    totalCell.textContent = `Rs.${total.toFixed(2)}`;
+  });
+
+  // ✅ Update the grand total at the bottom
+  document.getElementById('grandTotalContainer').textContent = `Grand Total: Rs.${grandTotal.toFixed(2)}`;
+}
+
 
         function downloadCustomerInfo() {
           const today = new Date().toISOString().slice(0, 10);
