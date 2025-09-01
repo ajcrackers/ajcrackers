@@ -120,6 +120,7 @@
 </div>
 
       <button class="button" onclick="printBill()">🧾 Print Bill</button>
+      <button class="button" style="background-color:#5cb85c; margin-left: 10px;" onclick="printChecklist()">📋 Print Checklist</button>
       <button class="button" style="background-color:#5bc0de; margin-left: 10px;" onclick="downloadCustomerInfo()">📥 Download Customer Info</button>
 
       <script>
@@ -259,6 +260,55 @@ function toTitleCase(str) {
           document.body.removeChild(a);
           URL.revokeObjectURL(url);
         }
+function printChecklist() {
+  const name = document.getElementById('customerName').value.trim();
+  const address = document.getElementById('customerAddress').value.trim();
+  if (!name || !address) {
+    alert('Name and Address are required.');
+    return;
+  }
+  const phone = document.getElementById('customerPhone').value.trim();
+
+  const rows = [];
+  let count = 0;
+
+  document.querySelectorAll('#productTable tbody tr').forEach(row => {
+    const input = row.querySelector('input[type="number"]');
+    if (!input) return;
+    const qty = parseInt(input.value) || 0;
+    if (qty <= 0) return;
+    const pname = input.dataset.name;
+    count++;
+    rows.push([count, pname, qty]);
+  });
+
+  if (!rows.length) {
+    alert('Please enter at least one product quantity.');
+    return;
+  }
+
+  const doc = new jsPDF();
+  doc.setFontSize(16);
+  doc.text('AJ Crackers - Packing Checklist', 14, 20);
+  doc.setFontSize(12);
+  doc.text(`Name: ${name}`, 14, 30);
+  doc.text(`Address: ${address}`, 14, 38);
+  if (phone) doc.text(`Phone: ${phone}`, 14, 46);
+
+  doc.autoTable({
+    startY: 55,
+    head: [['S.No', 'Product', 'Qty']],
+    body: rows,
+    theme: 'grid',
+    headStyles: { fillColor: [92, 184, 92] }, // green header
+  });
+
+  const finalY = doc.lastAutoTable.finalY + 10;
+  doc.setFontSize(10);
+  doc.text('Use this checklist for packing the order. No prices included.', 14, finalY);
+
+  doc.save(`Checklist_${name.replace(/\s+/g, '_')}.pdf`);
+}
 
         function printBill() {
           const name = document.getElementById('customerName').value.trim();
