@@ -3,104 +3,203 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>AJ Crackers - Customer View</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<title>RAJ Crackers - Customer View</title>
 <style>
   body {
     font-family: sans-serif;
     padding: 20px;
     margin: 0;
   }
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  width: 100%;
+  box-sizing: border-box;
+}
 
-  /* Make header full width */
-  header, footer {
-    width: 100vw;   /* full viewport width */
-    margin: 0;
-    padding: 0;     /* no horizontal padding */
-    box-sizing: border-box;
-    background-color: #d9534f;
-    color: white;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+
+header {
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #d9534f;
+  color: white;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.header-container {
+  max-width: 100%;
+  width: 100%;
+ 
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+}
+
+
+ /* Base styles for header */
+header, footer {
+  width: 100%;
+  background-color: #d9534f;
+  color: white;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Container inside header/footer to center content and add side padding */
+.header-container, .footer-container {
+  max-width: 100%;
+  width: 100%; /* ✅ Prevent overflow */
+  
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+}
+
+
+/* Left side header */
+.header-left {
+  max-width: 50%;
+  text-align: left;
+}
+.header-left h1 {
+  margin: 0;
+  font-size: 28px;
+}
+.header-left .tagline {
+  font-size: 14px;
+  margin-top: 5px;
+  color: #ffe;
+}
+
+/* Right side header */
+.header-right {
+  background: #fff3cd;
+  border: 2px solid #ffc107;
+  color: #333;
+  padding: 12px 20px;
+  border-radius: 10px;
+  max-width: 45%;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  text-align: right;
+  font-size: 16px;
+  
+}
+
+/* Blink animations */
+.blink-text {
+  animation: blink-fast 1s infinite;
+  color: #e60000;
+  font-weight: bold;
+}
+.blink-slow {
+  animation: blink-slow 2.5s infinite;
+  color: #d9534f;
+  font-weight: bold;
+}
+@keyframes blink-fast {
+  50% {
+    opacity: 0;
+  }
+}
+@keyframes blink-slow {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+/* Responsive styling for mobile view */
+@media (max-width: 600px) {
+  .header-container {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
-  /* Container inside header/footer to center content and add side padding */
-  .header-container, .footer-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 15px 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 15px;
-  }
-
-  /* Header left and right */
-  .header-left {
-    max-width: 50%;
+  .header-left,
+  .header-right {
+    max-width: 100%;
     text-align: left;
-  }
-  .header-left h1 {
-    margin: 0;
-    font-size: 28px;
-  }
-  .header-left .tagline {
-    font-size: 14px;
-    margin-top: 5px;
-    color: #ffe;
   }
 
   .header-right {
-    background: #fff3cd;
-    border: 2px solid #ffc107;
-    color: #333;
-    padding: 12px 20px;
-    border-radius: 10px;
-    max-width: 45%;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    text-align: right;
-    font-size: 16px;
-    margin-right: 1rem;
+    margin-top: 15px;
+    margin-right: 0;
+    font-size: 14px;
+    padding: 10px 15px;
   }
 
-  /* Blink animations */
-  .blink-text {
-    animation: blink-fast 1s infinite;
-    color: #e60000;
-    font-weight: bold;
-  }
-  .blink-slow {
-    animation: blink-slow 2.5s infinite;
-    color: #d9534f;
-    font-weight: bold;
-  }
-  @keyframes blink-fast {
-    50% {
-      opacity: 0;
-    }
-  }
-  @keyframes blink-slow {
-    0%, 100% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0.3;
-    }
+  .header-left h1 {
+    font-size: 24px;
   }
 
-  /* Responsive for small screens */
-  @media (max-width: 600px) {
-    .header-container {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-    .header-left, .header-right {
-      max-width: 100%;
-      text-align: left;
-    }
-    .header-right {
-      margin-top: 10px;
-    }
+  .header-left .tagline {
+    font-size: 12px;
   }
+}
+@media (max-width: 600px) {
+  /* Stack the form and buttons */
+  div[style*="display:flex"][style*="align-items:flex-start"] {
+    flex-direction: column !important;
+    gap: 1rem !important;
+  }
+
+  #customerInfo {
+    max-width: 100% !important;
+    margin-right: 0 !important;
+    width: 100%;
+	margin-bottom: 0 !important;
+  }
+
+  /* Full width inputs */
+  #customerInfo input[type="text"],
+  #customerInfo input[type="tel"],
+  #customerInfo textarea {
+    width: 300px !important;
+    max-width: 100%;
+  }
+
+  /* Table wrapper for horizontal scroll */
+  .table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Smaller table padding and font */
+  th, td {
+    padding: 6px 8px;
+    font-size: 14px;
+  }
+
+  /* Buttons smaller */
+  .button-group button {
+    padding: 10px 14px;
+    font-size: 14px;
+  }
+
+  /* Adjust WhatsApp button margin */
+  .whatsapp-button {
+    margin-left: 0 !important;
+  }
+
+  /* Make button group flex nicely */
+  .button-group {
+    flex-wrap: wrap;
+    gap: 10px;
+	margin: 0 !important;
+  }
+}
 
   /* Footer styles */
   footer {
@@ -135,10 +234,26 @@
     display: inline-block;
   }
   table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 auto; /* ✅ Center safely */
+  box-sizing: border-box;
+}
+@media (max-width: 600px) {
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
   }
+
+  th, td {
+    white-space: nowrap;
+    padding: 6px 8px;
+    font-size: 14px;
+  }
+}
+
   th, td {
     padding: 10px;
     border: 1px solid #ddd;
@@ -155,13 +270,13 @@ td:first-child {
     width: 60px;
   }
   .total-section {
-    margin-top: 20px;
+    margin: 20px;
     font-size: 18px;
     font-weight: bold;
   }
   .button-group {
     margin-top: 20px;
-    margin-left: auto;
+    margin-left: 20px;
   }
   .button-group button {
     padding: 12px 20px;
@@ -172,10 +287,15 @@ td:first-child {
     border-radius: 4px;
   }
   .whatsapp-button {
-    background-color: #25D366;
-    color: white;
-	margin-left: 15px;
-  }
+  background-color: #25D366;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 0; /* ✅ Prevent overflow on small screens */
+}
+
   @media (max-width: 600px) {
   .whatsapp-button {
     margin-left: 20px;
@@ -187,7 +307,7 @@ td:first-child {
     color: white;
   }
   .footer-note {
-    margin-top: 20px;
+    margin: 20px;
     color: #888;
     font-size: 14px;
   }
@@ -256,24 +376,42 @@ tr {
     transition: transform 0.2s ease;
   }
 
-  /* Modal for zoomed image */
-  .image-modal {
-    display: none;
-    position: fixed;
-    z-index: 9999;
-    left: 0; top: 0;
-    width: 100vw; height: 100vh;
-    background: rgba(0,0,0,0.8);
-    justify-content: center;
-    align-items: center;
-  }
+.image-modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  /* remove display:flex here */
+}
+#zoomedImage {
+  max-width: 90vw;  /* max width 90% of viewport */
+  max-height: 90vh; /* max height 90% of viewport */
+  border-radius: 8px; /* optional styling */
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
 
-  .image-modal img {
-    max-width: 90%;
-    max-height: 90%;
-    border-radius: 8px;
-    box-shadow: 0 0 10px #fff;
-  }
+
+.image-modal img {
+  max-width: 90vw;
+  max-height: 90vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 0 10px #fff;
+  cursor: zoom-out;
+}
+
+
 
   .print-button {
     background-color: #f44336;
@@ -288,7 +426,91 @@ tr {
   .print-button:hover {
     background-color: #d32f2f;
   }
+.form-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 0 1rem;
+  box-sizing: border-box;
+  width: 100%;
+   background-image: url('https://cdn.pixabay.com/photo/2016/10/21/23/19/diwali-1756961_1280.jpg');
+  background-repeat: no-repeat;
+  background-position: right center;
+  background-size: contain;
+}
 
+@media (max-width: 600px) {
+  .form-container {
+    flex-direction: column;
+    padding: 0 10px;
+  }
+
+  .button-group {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 10px;
+    margin: 10px 0 0;
+  }
+
+  .whatsapp-button {
+    margin-left: 0 !important; /* ✅ Reset */
+	margin-bottom: 15px;
+  }
+}
+/* Contact Info Bar */
+.contact-info-bar {
+  background-color: #2C3E50;
+  color: #fff;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  font-size: 14px;
+  font-family: Arial, sans-serif;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+
+.contact-info-bar i {
+  color: yellow;
+  margin-right: 8px;
+}
+
+/* Responsive for smaller screens */
+@media (max-width: 600px) {
+  .contact-info-bar {
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  table thead th {
+    font-size: 12px;
+    padding: 6px;
+  }
+
+  table thead th:nth-child(1) { width: 120px; } /* Crackers Name */
+  table thead th:nth-child(2) { width: 40px; }  /* Unit */
+  table thead th:nth-child(3),
+  table thead th:nth-child(4) { width: 60px; }  /* Actual & Offer Price */
+  table thead th:nth-child(5) { width: 40px; }  /* Quantity */
+  table thead th:nth-child(6) { width: 60px; }  /* Total */
+
+  table {
+    table-layout: auto !important;
+    font-size: 12px;
+  }
+
+  td, th {
+    word-break: break-word;
+  }
+}
 
 </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -298,21 +520,30 @@ tr {
 <body>
 
 <header>
-  <div class="header-container">
+  <div class="header-container" role="banner">
     <div class="header-left">
       <h1>🎇 AJ Crackers</h1>
-      <div class="tagline">Your Trusted Firework Partner</div>
+      <p class="tagline" aria-label="Tagline">Your Trusted Firework Partner</p>
     </div>
+	<!-- Contact Info Bar -->
+	<div class="contact-info-bar">
+	  <span><i class="fas fa-location-dot"></i> Sivakasi</span>
+	  <span><i class="fas fa-phone"></i> 8296772217</span>
+	  <span><i class="fas fa-envelope"></i> ajcrackers.sivakasi@gmail.com</span>
+	</div>
 
-    <div class="header-right">
-      <p><strong>🎁 Offer: Flat <span class="blink-text">80%</span> Discount Applied</strong></p>
-      <p class="days-left blink-slow">🔥 Hurry! Only <span id="daysLeft">115</span> days left for this offer!</p>
+    <div class="header-right" role="region" aria-live="polite" aria-atomic="true" aria-relevant="text">
+      <p><strong>🎁 Offer: Flat <span class="blink-text" aria-label="Discount percentage">80%</span> Discount Applied</strong></p>
+      <p class="days-left blink-slow" aria-live="polite" aria-atomic="true">
+        🔥 Hurry! Only <span id="daysLeft" aria-label="Days left for offer">53</span> days left for this offer!
+      </p>
     </div>
   </div>
 </header>
 
+
 <!-- Customer Info Inputs -->
-  <div style="display:flex;align-items:flex-start;gap:1rem;">
+  <div  class="form-container">
 <div id="customerInfo" style="margin-top: 20px; max-width: 800px; margin-right: auto; margin-bottom: 40px;">
 
   
@@ -326,7 +557,7 @@ tr {
   <!-- Address -->
   <div style="margin-bottom: 15px;">
     <label for="customerAddress">Address<span style="color: red;">*</span>:</label><br />
-    <textarea id="customerAddress" placeholder="Enter full address including area and landmark" required rows="3" style="width: 100%; padding: 8px; font-size: 14px; resize: vertical;"></textarea>
+    <textarea id="customerAddress" placeholder="Enter full address including area and landmark" required rows="3" style="width: 200px; padding: 8px; font-size: 14px; resize: vertical;"></textarea>
   </div>
 
  <!-- Pin Code and Phone (optional) -->
@@ -357,12 +588,12 @@ tr {
 <table id="productTable">
 <thead>
   <tr>
-    <th>Crackers Name</th>
-    <th>Unit</th>
-    <th>Actual Price (₹)</th> <!-- NEW -->
-    <th>Offer Price (₹)</th>
-    <th>Quantity</th>
-    <th>Total (₹)</th>
+    <th style="width:200px;">Crackers Name</th>
+    <th style="width:50px;">Unit</th>
+    <th style="width:70px;">Actual Price (₹)</th> <!-- NEW -->
+    <th style="width:70px;">Offer Price (₹)</th>
+    <th style="width:50px;">Quantity</th>
+    <th style="width:70px;">Total (₹)</th>
   </tr>
 </thead>
 
@@ -387,7 +618,7 @@ tr {
   <div class="footer-container">
     <p><strong>AJ Crackers</strong> — Your Trusted Firework Partner</p>
     <p>Contact: +91 99436 81121, +91 63808 72299 , +91 82481 03661 | Email: ajcrackers@gmail.com</p>
-    <p>© 2025 AJ Crackers. All rights reserved.</p>
+    <p>© 2025 RAJ Crackers. All rights reserved.</p>
     <p class="safety">🔥 Please celebrate responsibly and follow firework safety rules!</p>
   </div>
 </footer>
@@ -439,7 +670,7 @@ function loadProducts() {
     });
 }
 
-  function renderProductTable(products) {
+function renderProductTable(products) {
   const tbody = document.querySelector("#productTable tbody");
   tbody.innerHTML = "";
 
@@ -449,14 +680,13 @@ function loadProducts() {
   }
 
   const categories = {};
- const normalizeCategory = cat => cat.trim().toLowerCase();
+  const normalizeCategory = cat => cat.trim();
 
-products.forEach(item => {
-  const cat = normalizeCategory(item.category || "Uncategorized");
-  if (!categories[cat]) categories[cat] = [];
-  categories[cat].push(item);
-});
-
+  products.forEach(item => {
+    const cat = normalizeCategory(item.category || "Uncategorized");
+    if (!categories[cat]) categories[cat] = [];
+    categories[cat].push(item);
+  });
 
   Object.entries(categories).forEach(([category, items], index) => {
     const catRow = document.createElement("tr");
@@ -470,35 +700,48 @@ products.forEach(item => {
     items.forEach(item => {
       const row = document.createElement("tr");
       row.classList.add("category-row", `category-${index}`);
+
+// Construct image path from product name
+const safeFileName = item.name.replace(/[^a-zA-Z0-9\s]/g, "");  // Keep spaces
+const imageName = safeFileName + ".jpeg";
+const imagePath = `images/${encodeURIComponent(imageName)}`;
+
+
       row.innerHTML = `
         <td class="product-cell">
           <div class="product-wrapper">
-           
+            <img 
+  class="product-image"
+  src="${imagePath}" 
+  alt="${item.name}" 
+  onerror="this.style.display='none';"
+  onclick="zoomImage('${imagePath}')"
+/>
+
             <span class="product-name">${item.name}</span>
           </div>
         </td>
         <td>${item.unit || "-"}</td>
-        <td>₹${item.price.toFixed(2)}</td> <!-- Actual Price -->
-        <td>₹${item.offerprice.toFixed(2)}</td> <!-- Offer Price -->
+        <td>₹${item.price.toFixed(2)}</td>
+        <td>₹${item.offerprice.toFixed(2)}</td>
         <td>
-        <input 
-  type="number" 
-  min="0" 
-  step="1" 
-  placeholder="Qty" 
-  onchange="calculateTotals()" 
-  oninput="validateIntegerInput(this)" 
-  data-name="${item.name}" 
-  data-offer="${item.offerprice}" 
-/>
-
+          <input 
+            type="number" 
+            min="0" 
+            step="1" 
+            placeholder="Qty" 
+            onchange="calculateTotals()" 
+            oninput="validateIntegerInput(this)" 
+            data-name="${item.name}" 
+            data-offer="${item.offerprice}" 
+          />
         </td>
         <td class="item-total">₹0.00</td>
       `;
       tbody.appendChild(row);
     });
 
-    // Toggle category display
+    // Toggle category rows
     catRow.addEventListener("click", () => {
       const catRows = document.querySelectorAll(`.category-${index}`);
       catRows.forEach(r => {
@@ -510,6 +753,22 @@ products.forEach(item => {
     });
   });
 }
+function zoomImage(src) {
+  const modal = document.getElementById("imageModal");
+  const zoomedImg = document.getElementById("zoomedImage");
+
+  zoomedImg.src = src;
+  modal.style.display = "flex";
+}
+
+function closeModal(event) {
+  // Close modal only if the click target is the modal background, not the image
+  if (event.target.id === "imageModal") {
+    event.target.style.display = "none";
+  }
+}
+
+
 function validateIntegerInput(input) {
   const value = input.value.trim();
 
@@ -549,61 +808,64 @@ function calculateTotals() {
   }
 }
 
+  async function sendOrderToWhatsApp() {
+    const name = document.getElementById("customerName").value.trim();
+    const phone = document.getElementById("customerPhone").value.trim();
+    const address = document.getElementById("customerAddress").value.trim();
 
- function sendOrderToWhatsApp() {
-  const name = document.getElementById("customerName").value.trim();
-  const phone = document.getElementById("customerPhone").value.trim();
-  const address = document.getElementById("customerAddress").value.trim();
-
-  if (!name || !address) {
-    alert("Please fill in all required fields: Name, Address.");
-    return;
-  }
-
-  const rows = document.querySelectorAll("#productTable tbody tr");
-  let message = `Hi, I'm ${name}, and I'd like to place an order:\n\n`;
-  let originalTotal = 0;
-  let itemCount = 0;
-
-  rows.forEach(row => {
-    const input = row.querySelector("input[type='number']");
-    if (!input) return;
-    const qty = parseInt(input.value);
-    const itemName = input.dataset.name;
-    const offerPrice = parseFloat(input.dataset.offer);
-
-    if (qty && qty > 0) {
-      itemCount++;
-      const itemTotal = qty * offerPrice;
-      message += `${itemCount}. ${itemName} × ${qty} = ₹${itemTotal.toFixed(2)}\n`;
-      originalTotal += itemTotal;
+    if (!name || !address) {
+      alert("Please fill in all required fields: Name, Address.");
+      return;
     }
-  });
 
-  if (originalTotal === 0) {
-    alert("Please select at least one product before sending the order.");
-    return;
+    const rows = document.querySelectorAll("#productTable tbody tr");
+    let message = `Hi, I'm ${name}, and I'd like to place an order:\n\n`;
+
+    let originalTotal = 0;
+    let itemCount = 0;
+
+    rows.forEach(row => {
+      const input = row.querySelector("input[type='number']");
+      if (!input) return;
+      const qty = parseInt(input.value);
+      const itemName = input.dataset.name;
+      const offerPrice = parseFloat(input.dataset.offer);
+
+      if (qty && qty > 0) {
+        itemCount++;
+        const itemTotal = qty * offerPrice;
+        message += `${itemCount}. ${itemName} × ${qty} = ₹${itemTotal.toFixed(2)}\n`;
+        originalTotal += itemTotal;
+      }
+    });
+
+    if (originalTotal === 0) {
+      alert("Please select at least one product before sending the order.");
+      return;
+    }
+
+    const discount = typeof currentOffer !== 'undefined' ? currentOffer : 0;
+
+    message += `\nGrand Total: ₹${originalTotal.toFixed(2)} (After ${discount}% Discount)`;
+    message += `\n\n📍 Address: ${address}`;
+    if (phone) {
+      message += `\n📞 Phone: ${phone}`;
+    }
+    message += `\n\nThank you`;
+
+  
+    // Open WhatsApp with encoded text message
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappURL = `https://wa.me/918296772217?text=${encodedMessage}`;
+    window.open(whatsappURL, "_blank");
   }
-
-  message += `\nGrand Total: ₹${originalTotal.toFixed(2)} (After ${currentOffer}% Discount)`;
-  message += `\n\n📍 Address: ${address}`;
-  if (phone) {
-    message += `\n📞 Phone: ${phone}`;
-  }
-
-  message += `\n\nThank you`;
-
-  const encodedMessage = encodeURIComponent(message);
-  const whatsappURL = `https://wa.me/9943681121?text=${encodedMessage}`;
-  window.open(whatsappURL, "_blank");
-}
 
 function downloadPDF() {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
 
   doc.setFontSize(18);
-  doc.text("AJ Crackers - Product List", 14, 20);
+  doc.text("RAJ Crackers - Product List", 14, 20);
 
   const rows = [];
   const headers = [["S.No", "Product Name", "Offer Price (Rs.)"]]; // Added S.No column
@@ -636,7 +898,7 @@ function downloadPDF() {
     styles: { fontSize: 12 },
   });
 
-  doc.save("AJ_Crackers_Product_List.pdf");
+  doc.save("RAJ_Crackers_Product_List.pdf");
 }
 
 
@@ -648,6 +910,11 @@ function downloadPDF() {
   };
  
 </script>
+<!-- Image Zoom Modal -->
+<div id="imageModal" class="image-modal" onclick="closeModal(event)">
+  <img id="zoomedImage" src="" alt="Zoomed Image" onclick="event.stopPropagation()" />
+</div>
+
 
 
 </body>
