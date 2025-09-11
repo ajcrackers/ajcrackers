@@ -263,7 +263,7 @@
         "unit": "Box",
         "offerprice": "40"
     },
-    "Rio wheel (purple color)": {
+    "Wire Chakkar": {
         "price": 950,
         "category": "Chakkar",
         "unit": "Box",
@@ -520,12 +520,6 @@
         "category": "Fountain Items",
         "unit": "Box",
         "offerprice": "105"
-    },
-    "Popcorn": {
-        "price": 900,
-        "category": "Fountain Items",
-        "unit": "Box",
-        "offerprice": "180"
     },
     "Cocktail": {
         "price": 1000,
