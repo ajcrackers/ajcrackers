@@ -381,61 +381,67 @@
           doc.save(`Checklist_${name.replace(/\s+/g, '_')}.pdf`);
         }
 
-        function printBill() {
-          const name = document.getElementById('customerName').value.trim();
-          const address = document.getElementById('customerAddress').value.trim();
-          if (!name || !address) {
-            alert('Name and Address are required.');
-            return;
-          }
-          const phone = document.getElementById('customerPhone').value.trim();
+       function printBill() {
+  const name = document.getElementById('customerName').value.trim();
+  const address = document.getElementById('customerAddress').value.trim();
+  if (!name || !address) {
+    alert('Name and Address are required.');
+    return;
+  }
+  const phone = document.getElementById('customerPhone').value.trim();
 
-          const rows = [];
-          let count = 0, grandTotal = 0;
-          document.querySelectorAll('#productTable tbody tr').forEach(row => {
-            if (row.classList.contains('category-header')) return;
-            if (row.style.display === 'none') return; // skip hidden rows
-            const input = row.querySelector('input[type="number"]');
-            if (!input) return;
-            const qty = parseInt(input.value) || 0;
-            if (qty <= 0) return;
-            const pname = input.dataset.name;
-            const price = parseFloat(input.dataset.price);
-            const total = qty * price;
-            count++;
-            grandTotal += total;
-            rows.push([count, pname, qty, `${price.toFixed(2)}`, `${total.toFixed(2)}`]);
-          });
+  const rows = [];
+  let count = 0, grandTotal = 0;
+  document.querySelectorAll('#productTable tbody tr').forEach(row => {
+    if (row.classList.contains('category-header')) return;
+    if (row.style.display === 'none') return; // skip hidden rows
+    const input = row.querySelector('input[type="number"]');
+    if (!input) return;
+    const qty = parseInt(input.value) || 0;
+    if (qty <= 0) return;
+    const pname = input.dataset.name;
+    const price = parseFloat(input.dataset.price);
+    const total = qty * price;
+    count++;
+    grandTotal += total;
+    rows.push([count, pname, qty, `${price.toFixed(2)}`, `${total.toFixed(2)}`]);
+  });
 
-          if (!rows.length) {
-            alert('Please enter at least one product quantity.');
-            return;
-          }
+  if (!rows.length) {
+    alert('Please enter at least one product quantity.');
+    return;
+  }
 
-          const doc = new jsPDF();
-          doc.setFontSize(16);
-          doc.text('AJ Crackers - Customer Bill', 14, 20);
-          doc.setFontSize(12);
-          doc.text(`Name: ${name}`, 14, 30);
-          doc.text(`Address: ${address}`, 14, 38);
-          if (phone) doc.text(`Phone: ${phone}`, 14, 46);
+  const doc = new jsPDF();
+  doc.setFontSize(16);
+  doc.text('AJ Crackers - Customer Bill', 14, 20);
 
-          doc.autoTable({
-            startY: 55,
-            head: [['S.No', 'Product', 'Qty', 'Rate', 'Total']],
-            body: rows,
-            theme: 'grid',
-            headStyles: { fillColor: [217, 83, 79] },
-          });
+  doc.setFontSize(12);
+  doc.text(`Name: ${name}`, 14, 30);
+  doc.text(`Address: ${address}`, 14, 38);
+  if (phone) doc.text(`Phone: ${phone}`, 14, 46);
 
-          const finalY = doc.lastAutoTable.finalY + 10;
-          doc.setFontSize(13);
-          doc.text(`Grand Total (After ${currentOffer}% Discount): ${grandTotal.toFixed(2)}`, 14, finalY);
-          doc.setFontSize(10);
-          doc.text('Thank you for shopping with AJ Crackers!', 14, finalY + 8);
+  // ✅ Add today's date
+  const today = new Date().toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' });
+  doc.text(`Date: ${today}`, 150, 20); // right side (adjust X=150 if needed)
 
-          doc.save(`Bill_${name.replace(/\s+/g, '_')}.pdf`);
-        }
+  doc.autoTable({
+    startY: 55,
+    head: [['S.No', 'Product', 'Qty', 'Rate', 'Total']],
+    body: rows,
+    theme: 'grid',
+    headStyles: { fillColor: [217, 83, 79] },
+  });
+
+  const finalY = doc.lastAutoTable.finalY + 10;
+  doc.setFontSize(13);
+  doc.text(`Grand Total (After ${currentOffer}% Discount): ${grandTotal.toFixed(2)}`, 14, finalY);
+  doc.setFontSize(10);
+  doc.text('Thank you for shopping with AJ Crackers!', 14, finalY + 8);
+
+  doc.save(`Bill_${name.replace(/\s+/g, '_')}.pdf`);
+}
+
       </script>
     </div>
   </div>
